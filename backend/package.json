@@ -15,6 +15,7 @@
     "express-fileupload": "^1.5.1",
     "node-tesseract-ocr": "^2.2.1",
     "nodemon": "^3.1.9",
+    "openai": "^4.80.1",
     "openapi": "^1.0.1"
   }
 }
