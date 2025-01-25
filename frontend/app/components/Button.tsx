@@ -1,5 +1,6 @@
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useFonts } from 'expo-font';
 
 type Props = {
     label: string;
@@ -8,6 +9,9 @@ type Props = {
 };
 
 export default function Button({ label, theme, onPress }: Props) {
+    const [fontsLoaded] = useFonts({
+        'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
+      });
     if (theme === 'primary') {
         return (
             <View
@@ -27,7 +31,10 @@ export default function Button({ label, theme, onPress }: Props) {
 
     return (
         <View style={styles.buttonContainer}>
-            <Pressable style={styles.button} onPress={() => alert('You pressed a button.')}>
+            <Pressable style={({ pressed }) => [
+                styles.button,
+                { backgroundColor: pressed ? 'rgba(244, 244, 244, 0.5)' : 'rgba(255, 255, 255, 0.2)' }
+            ]} onPress={onPress}>
                 <Text style={styles.buttonLabel}>{label}</Text>
             </Pressable>
         </View>
@@ -36,20 +43,23 @@ export default function Button({ label, theme, onPress }: Props) {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: 320,
+        width: 200,
         height: 68,
-        marginHorizontal: 20,
+        margin: 8,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 3,
     },
     button: {
-        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 3,
+        borderRadius: 50,
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
+        fontFamily: 'Asap-Regular'
     },
     buttonIcon: {
         paddingRight: 8,

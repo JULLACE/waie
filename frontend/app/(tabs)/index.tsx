@@ -1,25 +1,54 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Animated } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from 'expo-font';
+import Button from "../components/Button";
+import { useRouter } from 'expo-router';
 
-export default function AboutScreen() {
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
+export default function HomeScreen() {
+    const router = useRouter();
+    useFonts({
+        'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
+        'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
+      });
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>WAIE</Text>
-            <Text style={styles.text}>What Am I Eating?</Text>
-        </View>
+        <AnimatedLinearGradient
+            colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }} 
+            style={styles.gradient}
+        >
+            <View style={styles.container}>
+                <Text style={styles.title}>WAYE</Text>
+                <Text style={styles.text}>What Are You Eating?</Text>
+                <Button label="Take Photo" onPress={() => router.push('/camera')} />
+                <Button label="Upload Photo" onPress={() => router.push('/camera')} />
+            </View>
+        </AnimatedLinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
-    background: {
-
-    },
-    container: {
+    gradient: {
         flex: 1,
-        backgroundColor: '#25292e',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    text: {
-        color: '#fff',
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
+    title: {
+        fontSize: 64,
+        fontFamily: 'Asap-Thin',
+        color: '#fff',
+        margin: 8,
+    },
+    text: {
+        fontSize: 24,
+        fontFamily: 'Asap-Regular',
+        color: 'rgb(50, 54, 53)',
+        marginBottom: 80,
+    }
 });
