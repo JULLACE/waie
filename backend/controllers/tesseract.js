@@ -32,9 +32,14 @@ tesRouter.post('/upload', async (request, response) => {
   await worker.terminate();
 
   const ingredients = await gptService.getIngredients(text)
-  const dietary = await gptService.getDietaryRestrictions(ingredients)
 
-  response.send(ingredients)
+  let ingredientText = JSON.stringify(ingredients[Object.keys(ingredients)[0]])
+  const dietary = await gptService.getDietaryRestrictions(ingredientText)
+
+  // Extremely ugly hack for ensuring gpt does not do weird stuff with our key values
+  const result = { ingredients: ingredients[Object.keys(ingredients)[0]], dietary: dietary[Object.keys(dietary)[0]] }
+
+  response.json(result)
 })
 
 module.exports = tesRouter

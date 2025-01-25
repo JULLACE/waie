@@ -58,10 +58,12 @@ async function getIngredients(ingredientList) {
 
 async function getDietaryRestrictions(ingredientList) {
     try {
+        console.log('is this workg.innn...', ingredientList)
         const result = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [{
-                "role": "user", "content": "List any allergies and dietary restrictions associated with the ingredients in \"" + ingredientList + "\" in an array and then put this array into a JSON. For example, { 'restrictions': ['Peanut Allergy', 'Not Gluten Free', 'Vegan'] }"
+                "role": "user", 
+                "content": `${ingredientList}\nList any possible allergies and dietary restrictions associated with the ingredients into an array, and then put this array into a JSON. Please keep it concise. For example, { 'restrictions': ['Peanut Allergy', 'Not Gluten Free', 'Vegan'] }. Account for as many restrictions as possible associated with the list.`
             }],
             response_format: { "type": "json_object" },
         });
