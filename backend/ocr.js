@@ -9,26 +9,39 @@ const PORT = 3000;
 
 // Tesseract configuration (UNNECESSARY I THINK)
 const config = {
-  lang: 'eng',  // Language of OCR
+  lang: 'eng',  // Language of OCR (eng by default)
   oem: 1,       // OCR Engine mode
   psm: 3        // Page segmentation mode
 };
 
 // Route to fetch and convert the image
-app.post('/', async (request, response) => {
-  if (!request.files || Object.keys(request.files).length === 0) {
-    return response.status(400).send('No files were uploaded.').end();
+app.post('/', async (req, res) => {
+  const imageUrl = req.query.imageurl;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
   }
 
-  const gotImage = request.files.image
+  const gotImage = req.files.image
+  const langChoice = req.body.lang
+
+  if (langChoice) config.lang = langChoice
 
   try {
-    scannedText = await tesseract.recognize(gotImage.data, config)
-    console.log('OCR Result...', scannedText)
-    response.send(scannedText)
+    // Use Tesseract to recognize text from the image
+    tesseract
+      .recognize(gotImage.data, config)
+      .then((text) => {
+        console.log('OCR Result in', langChoice, ':', text);
+        res.send(text);
+      })
+      .catch((error) => {
+        console.error('OCR Error:', error.message);
+        res.status(500).send('Error processing the image.');
+      });
   } catch (error) {
     console.error('Error:', error.message);
-    response.status(500).send('An error occurred while processing the image.');
+    res.status(500).send('An error occurred while processing the image.');
   }
 });
 
