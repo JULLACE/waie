@@ -1,5 +1,6 @@
 const tesRouter = require('express').Router()
 const { createWorker } = require('tesseract.js');
+const gptService = require('../utils/openaiService')
 
 tesRouter.get('/', async (request, response) => {
   const worker = await createWorker('eng', 1, {
@@ -30,7 +31,10 @@ tesRouter.post('/upload', async (request, response) => {
   console.log('Processed:', text);
   await worker.terminate();
 
-  response.send(text)
+  const ingredients = await gptService.getIngredients(text)
+  const dietary = await gptService.getDietaryRestrictions(ingredients)
+
+  response.send(ingredients)
 })
 
 module.exports = tesRouter
