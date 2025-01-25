@@ -1,35 +1,54 @@
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Animated } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from 'expo-font';
+import Button from "../components/Button";
+import { useRouter } from 'expo-router';
 
-import Button from '@/app/components/Button';
-import ImageViewer from '@/app/components/ImageViewer';
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
-const PlaceholderImage = require('@/assets/images/PlaceHolderImage.png');
-
-export default function Index() {
+export default function HomeScreen() {
+    const router = useRouter();
+    useFonts({
+        'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
+        'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
+      });
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <ImageViewer imgSource={PlaceholderImage} />
+        <AnimatedLinearGradient
+            colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }} 
+            style={styles.gradient}
+        >
+            <View style={styles.container}>
+                <Text style={styles.title}>WAYE</Text>
+                <Text style={styles.text}>What Are You Eating?</Text>
+                <Button label="Take Photo" onPress={() => router.push('/camera')} />
+                <Button label="Upload Photo" onPress={() => router.push('/camera')} />
             </View>
-            <View style={styles.footerContainer}>
-                <Button theme="primary" label="Choose a photo" />
-                <Button label="Use this photo" />
-            </View>
-        </View>
+        </AnimatedLinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
+    gradient: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     container: {
-        flex: 1,
-        backgroundColor: '#25292e',
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    imageContainer: {
-        flex: 1,
+    title: {
+        fontSize: 64,
+        fontFamily: 'Asap-Thin',
+        color: '#fff',
+        margin: 8,
     },
-    footerContainer: {
-        flex: 1 / 3,
-        alignItems: 'center',
-    },
+    text: {
+        fontSize: 24,
+        fontFamily: 'Asap-Regular',
+        color: 'rgb(50, 54, 53)',
+        marginBottom: 80,
+    }
 });
