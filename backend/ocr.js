@@ -16,9 +16,6 @@ const config = {
 
 // Route to fetch and convert the image
 app.post('/', async (req, res) => {
-  const imageUrl = req.query.imageurl;
-  console.log(imageUrl);
-
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
