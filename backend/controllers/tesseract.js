@@ -1,8 +1,5 @@
-const waieRouter = require('express').Router()
+const tesRouter = require('express').Router()
 const tesseract = require('node-tesseract-ocr');
-const fileupload = require('express-fileupload');
-
-waieRouter.use(fileupload()) // TODO: THIS GOES IN APP
 
 // Tesseract configuration
 const config = {
@@ -11,12 +8,13 @@ const config = {
   psm: 3        // Page segmentation mode
 };
 
-waieRouter.get('/', async (request, response) => {
+tesRouter.get('/', async (request, response) => {
   // actually idk what a get would do here lol
   // prob getting specific ingredient request
+  response.send('alive and well')
 })
 
-waieRouter.post('/upload', async (request, response) => {
+tesRouter.post('/upload', async (request, response) => {
   if (!request.files || Object.keys(request.files).length === 0) {
     return response.status(400).send('No files were uploaded.').end();
   }
@@ -28,8 +26,11 @@ waieRouter.post('/upload', async (request, response) => {
 
   // Sends image buffer to tesseract for recognition and plaintext conversion 
   try {
-    scannedText = await tesseract.recognize(gotImage.data, config)
+    let scannedText = await tesseract.recognize(gotImage.data, config)
     console.log('OCR Result...', scannedText)
+
+    response.status(201).send(scannedText) // THIS IS TEMPORARY
+
   } catch (error) {
     console.error('Error:', error.message);
     response.status(500).send('An error occurred while processing the image.');
@@ -40,4 +41,4 @@ waieRouter.post('/upload', async (request, response) => {
   // make it send a JSON in a specific strict format ??
 })
 
-module.exports = waieRouter
+module.exports = tesRouter
