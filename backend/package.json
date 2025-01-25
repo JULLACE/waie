@@ -10,6 +10,12 @@
   "author": "various",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "node-tesseract-ocr": "^2.2.1",
+    "nodemon": "^3.1.9",
+    "openai": "^4.80.1",
+    "openapi": "^1.0.1"
   }
 }
