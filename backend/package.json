@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "WHAT AM I EATING BACKEND",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "various",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
