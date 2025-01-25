@@ -1,49 +1,43 @@
 const express = require('express');
-const tesseract = require('node-tesseract-ocr');
 const fileupload = require('express-fileupload')
+const { createWorker } = require('tesseract.js');
 
 const app = express();
 app.use(fileupload())
 
 const PORT = 3000;
 
-// Tesseract configuration (UNNECESSARY I THINK)
-const config = {
-  lang: 'eng',  // Language of OCR (eng by default)
-  oem: 1,       // OCR Engine mode
-  psm: 3        // Page segmentation mode
-};
-
 // Route to fetch and convert the image
-app.post('/', async (req, res) => {
-  const imageUrl = req.query.imageurl;
+app.get('/', async (request, response) => {
+  const worker = await createWorker('eng', 1, {
+    cachePath: '/lang',
+  });
 
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
+  const { data: { text } } = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
+  console.log('Processed:', text);
+  await worker.terminate();
 
-  const gotImage = req.files.image
-  const langChoice = req.body.lang
-
-  if (langChoice) config.lang = langChoice
-
-  try {
-    // Use Tesseract to recognize text from the image
-    tesseract
-      .recognize(gotImage.data, config)
-      .then((text) => {
-        console.log('OCR Result in', langChoice, ':', text);
-        res.send(text);
-      })
-      .catch((error) => {
-        console.error('OCR Error:', error.message);
-        res.status(500).send('Error processing the image.');
-      });
-  } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).send('An error occurred while processing the image.');
-  }
+  response.send(text)
 });
+
+app.post('/upload', async (request, response) => {
+  if (!request.files || Object.keys(request.files).length === 0) {
+    return response.status(400).send('No files were uploaded.');
+  }
+
+  let langChoice = request.body.lang ? request.body.lang : 'eng'
+
+  const worker = await createWorker([`${langChoice}`]);
+
+  const gotImage = request.files.image
+  console.log('Image:', gotImage)
+
+  const { data: { text } } = await worker.recognize(gotImage.data);
+  console.log('Processed:', text);
+  await worker.terminate();
+
+  response.send(text)
+})
 
 // Start the server
 app.listen(PORT, () => {
