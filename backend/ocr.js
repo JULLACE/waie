@@ -15,28 +15,20 @@ const config = {
 };
 
 // Route to fetch and convert the image
-app.post('/', async (req, res) => {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
+app.post('/', async (request, response) => {
+  if (!request.files || Object.keys(request.files).length === 0) {
+    return response.status(400).send('No files were uploaded.').end();
   }
 
-  const gotImage = req.files.image
+  const gotImage = request.files.image
 
   try {
-    // Use Tesseract to recognize text from the image
-    tesseract
-      .recognize(gotImage.data, config)
-      .then((text) => {
-        console.log('OCR Result:', text);
-        res.send(text);
-      })
-      .catch((error) => {
-        console.error('OCR Error:', error.message);
-        res.status(500).send('Error processing the image.');
-      });
+    scannedText = await tesseract.recognize(gotImage.data, config)
+    console.log('OCR Result...', scannedText)
+    response.send(scannedText)
   } catch (error) {
     console.error('Error:', error.message);
-    res.status(500).send('An error occurred while processing the image.');
+    response.status(500).send('An error occurred while processing the image.');
   }
 });
 
