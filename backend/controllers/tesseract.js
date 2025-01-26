@@ -11,7 +11,7 @@ tesRouter.get('/', async (request, response) => {
   console.log('Processed:', text)
   await worker.terminate()
 
-  response.send(`${text} \nand healthy!`)
+  response.send(`${text} \n...and healthy!`)
 })
 
 tesRouter.post('/upload', async (request, response) => {
