@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignSelf: 'flex-end',
         flexDirection: 'row-reverse',
+        marginLeft: 15,
     },
     backbutton: {
         flex:1,
@@ -106,8 +107,6 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         alignItems:'flex-end',
         justifyContent: 'center',
-
-
     },
     text: {
         fontSize: 24,

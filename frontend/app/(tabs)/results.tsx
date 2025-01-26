@@ -84,7 +84,7 @@ export default function ResultsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: 1200,
+        height: 2000,
         backgroundColor: 'black',
         justifyContent: 'flex-start',
     },
