@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Image, View, StyleSheet, Dimensions, Text } from 'react-native';
+import { Image, View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
 import LanguageButton from "../components/LanguageButton";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import ocrService from '../services/ocr'
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ImagePickerExample() {
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
-  
-  const BackArrow = require('@/assets/images/BackArrow.png');
   
   const pickImage = async () => {
 
@@ -25,7 +25,8 @@ export default function ImagePickerExample() {
       setImage(result.assets[0].uri);
       ocrService.send(result.assets[0]).then(res => {
         console.log(res);
-        router.push('/results', {
+        router.push({
+          pathname: '/results',
           params: { ingredientsList: JSON.stringify(res.ingredientsList), dietary: JSON.stringify(res.dietary)}
         })
       })
@@ -36,8 +37,17 @@ export default function ImagePickerExample() {
   return (
     <View style={styles.container}>
       <View style={styles.topNavContainer}>
-        <Image source={BackArrow} style={styles.backArrow}/>
+        <LinearGradient
+          colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }} 
+          style={styles.topNavContainer}
+        >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="chevron-back-outline" size={40} color='rgb(206, 215, 199)' />
+        </TouchableOpacity>
         <LanguageButton label="EN"/>
+        </LinearGradient>
       </View>
 
       { image ?
@@ -48,7 +58,14 @@ export default function ImagePickerExample() {
       }
 
       <View style={styles.mainButtonContainer}>
-        <Button label="Upload Image" onPress={pickImage}/>
+        <LinearGradient
+          colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }} 
+          style={styles.mainButtonContainer}
+        >
+          <Button label="Upload Image" onPress={pickImage}/>
+        </LinearGradient>
       </View>
     </View>
   );
@@ -63,20 +80,19 @@ const styles = StyleSheet.create({
   },
     
   topNavContainer: {
-    display: 'flex',
+    width: '100%',
+    top: -10,
+    height: 120,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-
-    backgroundColor: 'black',
-    marginTop: 35,
-    paddingLeft: 25,
-    paddingRight: 25,
+    paddingTop: 40,
+    borderRadius: 25,
   },
 
   photoContainerEmpty: {
     borderRadius: 15,
-    backgroundColor: 'rgb(25, 25, 25)',
+    backgroundColor: "#000",
     flex: 2,
   },
 
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
     flex: 2,
 
     borderRadius: 15,
-    backgroundColor: 'rgb(25, 25, 25)',
+    backgroundColor: '#000',
   },
 
   image: {
@@ -96,20 +112,18 @@ const styles = StyleSheet.create({
   },
 
   mainButtonContainer:{
-    backgroundColor: 'black',
     alignItems: 'center',
     paddingTop: 25,
     zIndex: 5,
     borderRadius: 25,
-    position: 'absolute',
     bottom: 0,
+    paddingBottom: 25,
     width: Dimensions.get('window').width,
-    height: 187,
+    height: 180,
+    justifyContent: 'center',
   },
 
-  backArrow: {
-    objectFit: 'contain',
-    width: 35,
-    height: 35
+  backButton: {
+    margin: 5,
   },
 });
