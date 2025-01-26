@@ -23,11 +23,11 @@ export default function ImagePickerExample() {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      ocrService.send(result.assets[0]).then(res => {
+      ocrService.sendImage(result.assets[0]).then(res => {
         console.log(res);
         router.push({
           pathname: '/results',
-          params: { ingredientsList: JSON.stringify(res.ingredientsList), dietary: JSON.stringify(res.dietary)}
+          params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
         })
       })
     }
