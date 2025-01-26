@@ -30,12 +30,12 @@ export default function HomeScreen() {
                     label="Upload Photo" 
                     onPress={() => router.push('/photoselect')} 
                     icon={<Feather name="upload" size={24} />} />
-                <Button 
+                {/* <Button 
                     label="Results" 
                     onPress={() => router.push({
                         pathname: '/results',
-                        params: { ingredientsList: JSON.stringify(['apple', 'peanut butter', 'ice cream', 'cookielsdjkfl']) }
-                    })} />
+                        params: { ingredientsList: JSON.stringify(['apple', 'peanut butter', 'ice cream', 'cookielsdjkfl', 'sdfssfsdf', 'sdfsdffds', 'sdfsdfsdf' ]) }
+                    })} /> */}
             </View>
         </LinearGradient>
     );
