@@ -33,8 +33,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+
       ],
-      "expo-font"
+      ["expo-camera",
+      {
+        "cameraPermission": "Allow WAYE to access your camera",
+        "microphonePermission": "Allow WAYE to access your microphone",
+        "recordAudioAndroid": true
+      }
+    ]
     ],
     "experiments": {
       "typedRoutes": true
