@@ -83,14 +83,6 @@ export default function ImagePickerExample() {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Choose a language</Text>
               <View style={styles.buttonRow}>
-                {/* {languages.map(({name, code}) => (
-                    <Ingredient 
-                    key={code}
-                    id={code}
-                    label={name}
-                    isPressed={selectedButton === code}
-                    onPress={handleIngredientPress} />
-                ))} */}
                 {languages.map(({name, code}) => (
                     <Ingredient 
                     key={code}
