@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 // Grab just the token from the auhtorization header
@@ -36,18 +37,32 @@ usersRouter.post('/create', async (request, response) => {
 /*
   Receives an array of selected allergies / diets,
   and updates user allergy array accordingly
+  
+  Returns updated user JSON
 */
 usersRouter.put('/allergies', async (request, response) => {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json({ error: 'token invalid' })
     }
+
+    const body = request.body
+    if (!body.allergies) {
+        return response.status(400).json({
+            error: 'allergies missing'
+        })
+    }
+
     const user = await User.findById(decodedToken.id)
+    user.allergies = body.allergies
+    await user.save()
+
+    response.json(user)
 })
 
 /*
-   Returns an array of users
-   (should be removed later)  
+  Returns an array of users
+  (should be removed later)  
 */
 usersRouter.get('/', async (request, response) => {
     const users = await User.find({})

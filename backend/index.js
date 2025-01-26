@@ -3,7 +3,6 @@ const fileupload = require('express-fileupload')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv');
-const middleware = require('./utils/middleware')
 require('express-async-errors')
 
 dotenv.config();
@@ -11,6 +10,7 @@ dotenv.config();
 const tesRouter = require('./controllers/tesseract')
 const usersRouter = require('./controllers/users');
 const loginRouter = require('./controllers/login');
+const middleware = require('./utils/middleware')
 
 mongoose.connect(process.env.MDB_URI)
     .then(() => {
