@@ -2,6 +2,9 @@ const tesRouter = require('express').Router()
 const { createWorker } = require('tesseract.js');
 const gptService = require('../utils/openaiService')
 
+/*
+  Simply tests state of tesseract OCR 
+*/
 tesRouter.get('/', async (request, response) => {
   const worker = await createWorker('eng', 1, {
     cachePath: './lang',
@@ -14,6 +17,12 @@ tesRouter.get('/', async (request, response) => {
   response.send(`${text} \n...and healthy!`)
 })
 
+/*
+  Receives image, then replies with a JSON
+  containing parsed ingredient's lists and dietary restrictions
+  
+  { ingredients: [...], dietary: [...] }
+*/
 tesRouter.post('/upload', async (request, response) => {
   if (!request.files || Object.keys(request.files).length === 0) {
     return response.status(400).send('No files were uploaded.');

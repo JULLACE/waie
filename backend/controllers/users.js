@@ -11,6 +11,12 @@ const getTokenFrom = request => {
     return null
 }
 
+
+/*
+  Creates a user and registers them onto the DB
+  upon receiving username, name, and password.
+  Responds with data above and an id.
+*/
 usersRouter.post('/create', async (request, response) => {
     const { username, name, password } = request.body
     
@@ -27,7 +33,11 @@ usersRouter.post('/create', async (request, response) => {
     response.status(201).json(savedUser)
 })
 
-usersRouter.post('/allergies', async (request, response) => {
+/*
+  Receives an array of selected allergies / diets,
+  and updates user allergy array accordingly
+*/
+usersRouter.put('/allergies', async (request, response) => {
     const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
     if (!decodedToken.id) {
         return response.status(401).json({ error: 'token invalid' })
@@ -35,6 +45,10 @@ usersRouter.post('/allergies', async (request, response) => {
     const user = await User.findById(decodedToken.id)
 })
 
+/*
+   Returns an array of users
+   (should be removed later)  
+*/
 usersRouter.get('/', async (request, response) => {
     const users = await User.find({})
     response.json(users)

@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 
+
+/*
+    Replies with user's username, password, 
+    and authorization token upon successful login.
+*/
 loginRouter.post('/', async (request, response) => {
     const { username, password } = request.body
 
