@@ -60,7 +60,7 @@ export default function ImagePickerExample() {
         })
       })
     }
-    
+    setLoading(false)
   };
 
   const [selectedButton, setSelectedButton] = useState<string | null>('EN');
