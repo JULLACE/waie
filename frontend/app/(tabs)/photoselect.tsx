@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Image, View, StyleSheet, Dimensions } from 'react-native';
+import { Image, View, StyleSheet, Dimensions, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
 import LanguageButton from "../components/LanguageButton";
@@ -13,7 +13,6 @@ export default function ImagePickerExample() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images', 'videos'],
       allowsEditing: true,
-      aspect: [4, 3],
       quality: 1,
     });
 
@@ -25,63 +24,65 @@ export default function ImagePickerExample() {
   };
 
   return (
-    <View style={[styles.container,{flexDirection: 'column',},]}>
-        <View style={styles.topNavContainer}>
-            <Image source={BackArrow} style={styles.backArrow}/>
-            <LanguageButton label="EN"/>
-        </View>
-        {image ?
+    <View style={styles.container}>
+      <View style={styles.topNavContainer}>
+        <Image source={BackArrow} style={styles.backArrow}/>
+        <LanguageButton label="EN"/>
+      </View>
+
+      { image ?
         <View style={styles.photoContainer}>
-            {image && <Image source={{ uri: image }} style={styles.image}/>}
+          {image && <Image source={{ uri: image }} style={styles.image}/>}
         </View>
-        : <View style={styles.photoContainerEmpty}></View>
-        }
-        <View style={styles.mainButtonContainer}>
-            <Button label="Upload Image" onPress={pickImage}/>
-        </View>
-  </View>
-   
+          : <View style={styles.photoContainerEmpty}></View>
+      }
+
+      <View style={styles.mainButtonContainer}>
+        <Button label="Upload Image" onPress={pickImage}/>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        backgroundColor: 'black',
-    },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'black',
+    flex: 1,
+  },
     
   topNavContainer: {
-    flex: 1,
+    display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 25,
-    paddingLeft: 26,
-    paddingRight: 26,
+
+    backgroundColor: 'black',
+    marginTop: 35,
+    paddingLeft: 25,
+    paddingRight: 25,
   },
 
   photoContainerEmpty: {
-    flex: 7,
     borderRadius: 15,
-    zIndex: 1,
-    backgroundColor: 'purple',
+    backgroundColor: 'rgb(25, 25, 25)',
+    flex: 2,
   },
 
   photoContainer: {
-    flex: 7,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    flex: 2,
+
     borderRadius: 15,
-    zIndex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: 'rgb(25, 25, 25)',
   },
 
   image: {
-    resizeMode: "contain",
-    flex: 1,
-    height: '100%',
-    width: '100%',
+    objectFit: 'contain',
+    minHeight: '70%',
   },
 
   mainButtonContainer:{
@@ -96,12 +97,9 @@ const styles = StyleSheet.create({
     height: 187,
   },
 
-  backArrow: { 
-    width: 30,
-    height: 30,
+  backArrow: {
+    objectFit: 'contain',
+    width: 35,
+    height: 35
   },
-  
-  languageButtonLabel: { 
-    color: 'blue',
-  }
 });
