@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://10.136.178.238:3003/api/tes'
+const baseUrl = 'http://waye.club/api/tes'
 
 const getTest = () => {
     const request = axios.get(baseUrl)
