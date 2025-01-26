@@ -13,24 +13,30 @@ export default function HomeScreen() {
     useFonts({
         'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
-      });
+    });
     return (
         <AnimatedLinearGradient
             colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
             start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }} 
+            end={{ x: 1, y: 1 }}
             style={styles.gradient}
         >
             <View style={styles.container}>
                 <Text style={styles.title}>WAYE</Text>
                 <Text style={styles.text}>What Are You Eating?</Text>
-                <Button 
-                    label="Take Photo" 
+                <Button
+                    label="Take Photo"
                     onPress={() => router.push('/camera')}
                     icon={<Ionicons name={'camera'} size={24} />} />
+<<<<<<< HEAD
                 <Button 
                     label="Upload Photo" 
                     onPress={() => router.push('/photoselect')} 
+=======
+                <Button
+                    label="Upload Photo"
+                    onPress={() => router.push('/camera')}
+>>>>>>> main
                     icon={<Feather name="upload" size={24} />} />
             </View>
         </AnimatedLinearGradient>

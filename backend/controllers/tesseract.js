@@ -5,11 +5,11 @@ const gptService = require('../utils/openaiService')
 tesRouter.get('/', async (request, response) => {
   const worker = await createWorker('eng', 1, {
     cachePath: './lang',
-  });
+  })
 
   const { data: { text } } = await worker.recognize('https://tesseract.projectnaptha.com/img/eng_bw.png');
-  console.log('Processed:', text);
-  await worker.terminate();
+  console.log('Processed:', text)
+  await worker.terminate()
 
   response.send(`${text} \nand healthy!`)
 })
@@ -25,11 +25,13 @@ tesRouter.post('/upload', async (request, response) => {
     cachePath: './lang',
   });
 
+  worker.setParameters({tessedit_pageseg_mode: 3})
+
   const gotImage = request.files.image
 
-  const { data: { text } } = await worker.recognize(gotImage.data);
-  console.log('Processed:', text);
-  await worker.terminate();
+  const { data: { text } } = await worker.recognize(gotImage.data)
+  console.log('Processed:', text)
+  await worker.terminate()
 
   const ingredients = await gptService.getIngredients(text)
 
