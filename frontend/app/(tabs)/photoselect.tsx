@@ -58,9 +58,9 @@ export default function ImagePickerExample() {
           pathname: '/results',
           params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
         })
+        setLoading(false)
       })
     }
-    setLoading(false)
   };
 
   const [selectedButton, setSelectedButton] = useState<string | null>('EN');
@@ -96,7 +96,7 @@ export default function ImagePickerExample() {
           </View>
         </Modal>
     <View style={styles.container}>
-      {loading? <Loading/> : null}
+      {loading ? <Loading/> : null}
       <View style={styles.topNavContainer}>
         <LinearGradient
           colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}

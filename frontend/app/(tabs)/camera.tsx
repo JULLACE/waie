@@ -40,9 +40,9 @@ export default function App() {
                     pathname: '/results',
                     params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
                 })
+                setLoading(false)
             })
         }
-        setLoading(false)
     };
 
     function toggleCameraFacing() {
