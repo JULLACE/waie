@@ -2,6 +2,8 @@ import { CameraView, CameraType, useCameraPermissions, } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import Feather from '@expo/vector-icons/Feather';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function App() {
     const [facing, setFacing] = useState<CameraType>('back');
@@ -43,12 +45,12 @@ export default function App() {
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-                        <Text style={styles.text}>Flip Camera </Text>
+                        <MaterialCommunityIcons name="camera-flip-outline" size={36} color={"white"}>  </MaterialCommunityIcons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.camerabutton} onPress={takePhoto}>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={() => router.back()}  >
-                        <Text style={styles.text}>        Back</Text>
+                    <TouchableOpacity style={styles.backbutton} onPress={() => router.back()}  >
+                        <Text style={styles.text}>       Back</Text>
                     </TouchableOpacity>
 
 
@@ -85,11 +87,19 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
 
+
     },
+    backbutton: {
+        flex:1,
+        alignSelf: 'flex-end',
+    },
+
     camerabutton: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        borderWidth: 5,
+        borderColor: 'lightgrey',
         backgroundColor: 'white',
         alignSelf: 'flex-end',
         alignItems:'flex-end',
