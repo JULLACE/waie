@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://waye.club/api/tes'
+const baseUrl = '/api/tes'
 
 const getTest = () => {
     const request = axios.get(baseUrl)
