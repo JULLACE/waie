@@ -19,9 +19,7 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.gradient}
         >
-            <View style={styles.topLogo}>
-                <Text style={styles.smallLogo}>WAYE</Text>
-            </View>
+            
 
             <View style={styles.container}>
               
