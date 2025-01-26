@@ -6,6 +6,7 @@ import { useSearchParams } from 'expo-router/build/hooks';
 import Ingredient from "../components/Ingredient";
 import { useState } from 'react';
 import Dropdown from "../components/Dropdown";
+import ocrService from "../services/ocr"
 
 export default function ResultsScreen() {
     const searchParams = useSearchParams();
@@ -14,6 +15,8 @@ export default function ResultsScreen() {
 
     const dietaryList = searchParams.get('dietary');
     const dietaryArray = dietaryList ? JSON.parse(dietaryList) : [];
+
+    const [explanationMessage, setExplanationMessage] = useState('Click on an ingredient to learn more!')
 
     const router = useRouter();
     useFonts({
@@ -24,7 +27,9 @@ export default function ResultsScreen() {
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
     const handleIngredientPress = (id: string) => {
         setSelectedButton(id);
-        {/* Implement backend stuff */}
+        ocrService.sendOneIngredient(id).then(res => {
+            setExplanationMessage(res.explanation)
+        })
     };
 
     const [visible, setVisible] = useState(false);
@@ -59,10 +64,8 @@ export default function ResultsScreen() {
                     ))}
                 </View>
                 <View style={styles.ingredientInfo}>
-                    {/* Implement backend stuff */}
-                    <Text style={styles.text}>Click on an ingredient to learn more!</Text>
+                    <Text style={styles.text}>{explanationMessage}</Text>
                 </View>
-                {/* Implement backend stuff */}
                 <Dropdown
                     label={`Allergens & Dietary Restrictions (${dietaryArray ? dietaryArray.length : 0})`}
                     isVisible={visible}
