@@ -52,4 +52,15 @@ tesRouter.post('/upload', async (request, response) => {
   response.json(result)
 })
 
+tesRouter.post('/explain', async (request, response) => {
+  if (request.body && request.body.word) {
+    let ingredient = request.body.word
+    const answer = await gptService.getInfo(ingredient)
+
+    // Here's that ugly trick from earlier
+    response.json({ explanation: answer[Object.keys(answer)[0]] })
+  }
+  else response.status(500).end()
+})
+
 module.exports = tesRouter

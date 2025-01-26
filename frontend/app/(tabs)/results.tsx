@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
@@ -6,26 +6,36 @@ import { useSearchParams } from 'expo-router/build/hooks';
 import Ingredient from "../components/Ingredient";
 import { useState } from 'react';
 import Dropdown from "../components/Dropdown";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import ocrService from "../services/ocr"
 
 export default function ResultsScreen() {
     const searchParams = useSearchParams();
     const ingredientsList = searchParams.get('ingredientsList');
     const ingredientsArray = ingredientsList ? JSON.parse(ingredientsList) : [];
+
+    const dietaryList = searchParams.get('dietary');
+    const dietaryArray = dietaryList ? JSON.parse(dietaryList) : [];
+
+    const [explanationMessage, setExplanationMessage] = useState('Click on an ingredient to learn more!')
+
     const router = useRouter();
     useFonts({
         'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
         'Asap-SemiBold': require('../../assets/fonts/Asap-SemiBold.ttf'),
-      });
+    });
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
     const handleIngredientPress = (id: string) => {
         setSelectedButton(id);
-        {/* Implement backend stuff */}
+        ocrService.sendOneIngredient(id).then(res => {
+            setExplanationMessage(res.explanation)
+        })
     };
+
     const [visible, setVisible] = useState(false);
     const handleDropdownPress = () => {
         setVisible(!visible);
-        {/* Implement backend stuff */}
     }
 
     return (
@@ -39,6 +49,9 @@ export default function ResultsScreen() {
                         end={{ x: 1, y: 1 }} 
                         style={styles.headerContainer}
                     >
+                        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}  >
+                            <Text style={styles.text}><Ionicons name="chevron-back-outline" size={40} color='rgb(206, 215, 199)' /></Text>
+                        </TouchableOpacity>
                         <Text style={styles.header}>Results</Text>
                         <Text style={styles.title}>What Are You Eating?</Text>
                     </LinearGradient>
@@ -55,14 +68,12 @@ export default function ResultsScreen() {
                     ))}
                 </View>
                 <View style={styles.ingredientInfo}>
-                    {/* Implement backend stuff */}
-                    <Text style={styles.text}>Click on an ingredient to learn more!</Text>
+                    <Text style={styles.text}>{explanationMessage}</Text>
                 </View>
-                {/* Implement backend stuff */}
                 <Dropdown
-                    label="Allergens & Dietary Restrictions (NUMBER)   "
+                    label={`Allergens & Dietary Restrictions (${dietaryArray ? dietaryArray.length : 0})`}
                     isVisible={visible}
-                    content="asdkjflskdfjlskfjslkfjlsdkfjf"
+                    content={dietaryArray ? dietaryArray.join(', ') : 'grdhufdxfshcxjjndscx'}
                     onPress={handleDropdownPress}>
                 </Dropdown>
             </View>
@@ -73,7 +84,7 @@ export default function ResultsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: 1500,
+        height: 1200,
         backgroundColor: 'black',
         justifyContent: 'flex-start',
     },
@@ -88,6 +99,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 80,
     },
+    backButton: {
+        position: 'absolute',
+        top: 80,
+        left: 30,
+    },
     header: {
         fontSize: 36,
         fontFamily: 'Asap-Semibold',
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     title: {
-        fontSize: 52,
+        fontSize: 50,
         fontFamily: 'Asap-Thin',
         color: '#fff',
         margin: 8,
