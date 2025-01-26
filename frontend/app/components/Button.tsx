@@ -6,9 +6,10 @@ type Props = {
     label: string;
     theme?: 'primary';
     onPress?: () => void;
+    icon?: React.ReactNode;
 };
 
-export default function Button({ label, theme, onPress }: Props) {
+export default function Button({ label, theme, onPress, icon }: Props) {
     const [fontsLoaded] = useFonts({
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
       });
@@ -35,6 +36,7 @@ export default function Button({ label, theme, onPress }: Props) {
                 styles.button,
                 { backgroundColor: pressed ? 'rgba(244, 244, 244, 0.5)' : 'rgba(255, 255, 255, 0.2)' }
             ]} onPress={onPress}>
+                {icon && <View style={styles.icon}>{icon}</View>}
                 <Text style={styles.buttonLabel}>{label}</Text>
             </Pressable>
         </View>
@@ -68,4 +70,8 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
     },
+    icon: {
+        color: 'rgb(50, 54, 53)',
+        margin: 5,
+    }
 });
