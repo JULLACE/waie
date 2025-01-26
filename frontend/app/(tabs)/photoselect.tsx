@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Image, View, StyleSheet, Dimensions, Text } from 'react-native';
+import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Button from "../components/Button";
 import LanguageButton from "../components/LanguageButton";
 
+import ocrService from '../services/ocr'
+
 export default function ImagePickerExample() {
   const [image, setImage] = useState<string | null>(null);
+  const router = useRouter();
+  
   const BackArrow = require('@/assets/images/BackArrow.png');
   
   const pickImage = async () => {
@@ -16,11 +21,16 @@ export default function ImagePickerExample() {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      ocrService.send(result.assets[0]).then(res => {
+        console.log(res);
+        router.push('/results', {
+          params: { ingredientsList: JSON.stringify(res.ingredientsList), dietary: JSON.stringify(res.dietary)}
+        })
+      })
     }
+    
   };
 
   return (
