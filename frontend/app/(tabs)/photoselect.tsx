@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 import ocrService from '../services/ocr'
 import { LinearGradient } from 'expo-linear-gradient';
 
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Ingredient from '../components/Ingredient';
 
 const languages = [
