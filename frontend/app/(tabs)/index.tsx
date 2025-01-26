@@ -3,6 +3,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from 'expo-font';
 import Button from "../components/Button";
 import { useRouter } from 'expo-router';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -22,8 +24,14 @@ export default function HomeScreen() {
             <View style={styles.container}>
                 <Text style={styles.title}>WAYE</Text>
                 <Text style={styles.text}>What Are You Eating?</Text>
-                <Button label="Take Photo" onPress={() => router.push('/camera')} />
-                <Button label="Upload Photo" onPress={() => router.push('/camera')} />
+                <Button 
+                    label="Take Photo" 
+                    onPress={() => router.push('/camera')}
+                    icon={<Ionicons name={'camera'} size={24} />} />
+                <Button 
+                    label="Upload Photo" 
+                    onPress={() => router.push('/camera')} 
+                    icon={<Feather name="upload" size={24} />} />
             </View>
         </AnimatedLinearGradient>
     );
