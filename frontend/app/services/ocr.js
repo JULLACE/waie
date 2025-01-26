@@ -9,14 +9,17 @@ const getTest = () => {
     return request.then(response => response.data)
 }
 
-const sendImage = (image) => {
-    console.log('in service', image)
+const sendImage = (image, lang) => {
+    console.log('in service', image, lang)
     let data = new FormData()
     data.append('image', {
         uri: `${image.uri}`,
         type: `${image.mimeType ? image.mimeType : 'image/jpeg'}`,
         name: `${image.fileName ? image.fileName : 'test'}`
     })
+    
+    const langCode = lang ? lang : 'eng'
+    data.append('lang', langCode)
 
     const request = axios.post(`${baseUrl}/upload`, data, {
         headers: {

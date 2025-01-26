@@ -5,11 +5,12 @@ import { LinearGradient } from "expo-linear-gradient";
 type Props = {
     id: string,
     label: string;
+    tkey?: string,
     isPressed: boolean;
-    onPress: (id:string) => void;
+    onPress: (id:string, tkey:string) => void;
 };
 
-export default function Ingredient({ id, label, isPressed, onPress }: Props) {
+export default function Ingredient({ id, label, tkey, isPressed, onPress }: Props) {
     useFonts({
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
       });
@@ -25,7 +26,7 @@ export default function Ingredient({ id, label, isPressed, onPress }: Props) {
                 <Pressable style={({ pressed }) => [
                 styles.button,
                 { backgroundColor: isPressed ? 'rgba(244, 244, 244, 0.2)' : 'rgba(101, 95, 95, 255)' }
-                ]} onPress={() => onPress(id)}>
+                ]} onPress={() => onPress(id, tkey)}>
                 <Text style={styles.buttonLabel}>{label}</Text>
             </Pressable>
             </LinearGradient>
