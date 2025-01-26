@@ -1,10 +1,15 @@
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { useState } from 'react';
+import { CameraView, CameraType, useCameraPermissions, } from 'expo-camera';
+import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
 
 export default function App() {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
+    const cameraRef = useRef<CameraView>(null)
+    const router = useRouter();
+
+
 
 
     if (!permission) {
@@ -21,19 +26,32 @@ export default function App() {
             </View>
         );
     }
+    const takePhoto = async () => {
+        if (cameraRef.current) {
+            const photo = await cameraRef.current.takePictureAsync();
+            console.log(photo)
+        }
+
+    };
 
     function toggleCameraFacing() {
-        setFacing(current => (current === 'back' ? 'front' : 'back'));
-    }
-
+        setFacing(current => (current == 'back' ? 'front' : 'back'));
+    };
 
     return (
         <View style={styles.container}>
-            <CameraView style={styles.camera} facing={facing}>
+            <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-                        <Text style={styles.text}>Flip Camera</Text>
+                        <Text style={styles.text}>Flip Camera </Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.camerabutton} onPress={takePhoto}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={takePhoto}  >
+                        <Text style={styles.text}>        Back</Text>
+                    </TouchableOpacity>
+
+
 
                 </View>
             </CameraView>
@@ -62,9 +80,22 @@ const styles = StyleSheet.create({
         margin: 64,
     },
     button: {
-        flex: 1,
+        flex:1,
         alignSelf: 'flex-end',
-        alignItems: 'center',
+
+        justifyContent: 'center',
+
+    },
+    camerabutton: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: 'white',
+        alignSelf: 'flex-end',
+        alignItems:'flex-end',
+        justifyContent: 'center',
+
+
     },
     text: {
         fontSize: 24,
