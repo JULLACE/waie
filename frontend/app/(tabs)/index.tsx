@@ -21,7 +21,6 @@ export default function HomeScreen() {
         >
             <View style={styles.topLogo}>
                 <Text style={styles.smallLogo}>WAYE</Text>
-                <Text style={styles.smallButton}>Sign In</Text>
             </View>
 
             <View style={styles.container}>
