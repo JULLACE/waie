@@ -2,17 +2,14 @@ import { CameraView, CameraType, useCameraPermissions, } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function App() {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
     const cameraRef = useRef<CameraView>(null)
     const router = useRouter();
-
-
-
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -44,17 +41,14 @@ export default function App() {
         <View style={styles.container}>
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-                        <MaterialCommunityIcons name="camera-flip-outline" size={36} color={"white"}>  </MaterialCommunityIcons>
+                    <TouchableOpacity style={styles.backbutton} onPress={() => router.back()}  >
+                        <Text style={styles.text}><Ionicons name="chevron-back-outline" size={40} color='rgb(206, 215, 199)' /></Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.camerabutton} onPress={takePhoto}>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.backbutton} onPress={() => router.back()}  >
-                        <Text style={styles.text}>       Back</Text>
+                    <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+                        <MaterialCommunityIcons name="camera-flip-outline" size={36} color={"white"}>  </MaterialCommunityIcons>
                     </TouchableOpacity>
-
-
-
                 </View>
             </CameraView>
         </View>
@@ -76,24 +70,22 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     buttonContainer: {
+        alignSelf: 'center',
         flex: 1,
         flexDirection: 'row',
         backgroundColor: 'transparent',
         margin: 64,
+        justifyContent: 'space-between',
     },
     button: {
         flex:1,
         alignSelf: 'flex-end',
-
-        justifyContent: 'center',
-
-
+        flexDirection: 'row-reverse',
     },
     backbutton: {
         flex:1,
         alignSelf: 'flex-end',
     },
-
     camerabutton: {
         width: 80,
         height: 80,
