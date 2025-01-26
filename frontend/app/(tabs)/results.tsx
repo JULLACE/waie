@@ -11,21 +11,25 @@ export default function ResultsScreen() {
     const searchParams = useSearchParams();
     const ingredientsList = searchParams.get('ingredientsList');
     const ingredientsArray = ingredientsList ? JSON.parse(ingredientsList) : [];
+
+    const dietaryList = searchParams.get('dietary');
+    const dietaryArray = dietaryList ? JSON.parse(dietaryList) : [];
+
     const router = useRouter();
     useFonts({
         'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
         'Asap-SemiBold': require('../../assets/fonts/Asap-SemiBold.ttf'),
-      });
+    });
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
     const handleIngredientPress = (id: string) => {
         setSelectedButton(id);
         {/* Implement backend stuff */}
     };
+
     const [visible, setVisible] = useState(false);
     const handleDropdownPress = () => {
         setVisible(!visible);
-        {/* Implement backend stuff */}
     }
 
     return (
@@ -60,9 +64,9 @@ export default function ResultsScreen() {
                 </View>
                 {/* Implement backend stuff */}
                 <Dropdown
-                    label="Allergens & Dietary Restrictions (NUMBER)   "
+                    label={`Allergens & Dietary Restrictions (${dietaryArray ? dietaryArray.length : 0})`}
                     isVisible={visible}
-                    content="asdkjflskdfjlskfjslkfjlsdkfjf"
+                    content={dietaryArray ? dietaryArray.join(', ') : 'grdhufdxfshcxjjndscx'}
                     onPress={handleDropdownPress}>
                 </Dropdown>
             </View>

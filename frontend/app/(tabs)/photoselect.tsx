@@ -27,7 +27,7 @@ export default function ImagePickerExample() {
         console.log(res);
         router.push({
           pathname: '/results',
-          params: { ingredientsList: JSON.stringify(res.ingredientsList), dietary: JSON.stringify(res.dietary)}
+          params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
         })
       })
     }
