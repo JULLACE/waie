@@ -47,7 +47,7 @@ export default function App() {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.camerabutton} onPress={takePhoto}>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={takePhoto}  >
+                    <TouchableOpacity style={styles.button} onPress={() => router.back()}  >
                         <Text style={styles.text}>        Back</Text>
                     </TouchableOpacity>
 
