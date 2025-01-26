@@ -1,7 +1,4 @@
 const OpenAI = require('openai');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
@@ -37,7 +34,7 @@ async function getIngredients(ingredientList) {
             model: "gpt-4o-mini",
             messages: [{
                     "role": "user",
-                    "content": "Convert \"" + ingredientList + "\" to an array of ingredients in English, separating by commas but keeping multi-word ingredients intact. Please put this array into a JSON. For example, { 'ingredients': ['Milk', 'Cheese', 'Onion'] }"
+                    "content": "Convert \"" + ingredientList + "\" to an array of ingredients in English, separating by commas but keeping multi-word ingredients intact. The list may contain jumbled words, so ensure that you are only taking account actual ingredients. Please put this array into a JSON. For example, { 'ingredients': ['Milk', 'Cheese', 'Onion'] } Return an empty JSON if there are no words that may resemble proper ingredients."
                 }],
             response_format: { "type": "json_object" }
         });
