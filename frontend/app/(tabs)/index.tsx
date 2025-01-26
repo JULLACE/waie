@@ -37,7 +37,7 @@ export default function HomeScreen() {
                         icon={<Feather name="upload" size={24} />} />
             </View>
 
-        </AnimatedLinearGradient>
+        </LinearGradient>
     );
 }
 

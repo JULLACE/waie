@@ -8,10 +8,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import ocrService from '../services/ocr'
 import { LinearGradient } from 'expo-linear-gradient';
+import Loading from "../components/Loading"
+
 
 export default function ImagePickerExample() {
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   
   const pickImage = async () => {
 
@@ -22,6 +26,7 @@ export default function ImagePickerExample() {
     });
 
     if (!result.canceled) {
+      setLoading(true) // for the loading screen
       setImage(result.assets[0].uri);
       ocrService.sendImage(result.assets[0]).then(res => {
         console.log(res);
@@ -36,6 +41,7 @@ export default function ImagePickerExample() {
 
   return (
     <View style={styles.container}>
+      {loading? <Loading/> : null}
       <View style={styles.topNavContainer}>
         <LinearGradient
           colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
