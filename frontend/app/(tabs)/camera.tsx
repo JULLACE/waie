@@ -6,12 +6,14 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import ocrService from "../services/ocr"
+import Loading from "../components/Loading"
 
 export default function App() {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
-    const cameraRef = useRef<CameraView>(null)
+    const cameraRef = useRef<CameraView>(null);
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -31,7 +33,7 @@ export default function App() {
         if (cameraRef.current) {
             const photo = await cameraRef.current.takePictureAsync();
             console.log(photo)
-
+            setLoading(true) // for the loading screen
             ocrService.sendImage(photo).then(res => {
                 console.log(res);
                 router.push({
@@ -48,7 +50,9 @@ export default function App() {
     };
 
     return (
+
         <View style={styles.container}>
+            {loading? <Loading/> : null}
             <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.backbutton} onPress={() => router.back()}  >
@@ -62,6 +66,7 @@ export default function App() {
                 </View>
             </CameraView>
         </View>
+
     );
 }
 

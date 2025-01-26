@@ -8,6 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 import ocrService from '../services/ocr'
 import { LinearGradient } from 'expo-linear-gradient';
+
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import Ingredient from '../components/Ingredient';
 
@@ -24,17 +25,22 @@ const languages = [
   { name: 'Portuguese', code: 'PT' },
   { name: 'French', code: 'FR' },
 ];
-
+        
+import Loading from "../components/Loading"
 
 export default function ImagePickerExample() {
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
+
   useFonts({
     'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
     'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
     'Asap-SemiBold': require('../../assets/fonts/Asap-SemiBold.ttf'),
   });
+
+  const [loading, setLoading] = useState(false);
+
   const pickImage = async () => {
 
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -44,6 +50,7 @@ export default function ImagePickerExample() {
     });
 
     if (!result.canceled) {
+      setLoading(true) // for the loading screen
       setImage(result.assets[0].uri);
       ocrService.sendImage(result.assets[0]).then(res => {
         console.log(res);
@@ -89,6 +96,7 @@ export default function ImagePickerExample() {
           </View>
         </Modal>
     <View style={styles.container}>
+      {loading? <Loading/> : null}
       <View style={styles.topNavContainer}>
         <LinearGradient
           colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
