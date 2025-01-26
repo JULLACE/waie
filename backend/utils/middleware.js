@@ -1,5 +1,5 @@
 const unknownEndPoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint, dumbass'})
+    response.status(404).send({ error: 'unknown endpoint'})
 }
 
 // Must be last loaded middleware and routes must be registered beforehand
@@ -17,7 +17,7 @@ const errorHandler = (error, request, response, next) => {
             return response.status(400).json({ error: 'expected username to be unique'})
     }
     else if (error.name === 'JsonWebTokenError') {
-        return response.status(401).json({ error: 'token invalid bitch' })
+        return response.status(401).json({ error: 'token invalid ' })
     }
     else if (error.name === 'TokenExpiredError') {
         return response.status(401).json({ error: 'token expired' })

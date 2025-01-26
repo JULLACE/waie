@@ -24,6 +24,7 @@ tesRouter.get('/', async (request, response) => {
   { ingredients: [...], dietary: [...] }
 */
 tesRouter.post('/upload', async (request, response) => {
+  console.log(request.files)
   if (!request.files || Object.keys(request.files).length === 0) {
     return response.status(400).send('No files were uploaded.');
   }
