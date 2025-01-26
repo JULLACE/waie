@@ -29,6 +29,7 @@ tesRouter.post('/upload', async (request, response) => {
   }
 
   let langChoice = request.body.lang ? request.body.lang : 'eng'
+  console.log('LANGUAGE IS', langChoice)
 
   const worker = await createWorker([`${langChoice}`], 1, {
     cachePath: './lang',
