@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+import ocrService from "../services/ocr"
+
 export default function App() {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
@@ -29,6 +31,14 @@ export default function App() {
         if (cameraRef.current) {
             const photo = await cameraRef.current.takePictureAsync();
             console.log(photo)
+
+            ocrService.sendImage(photo).then(res => {
+                console.log(res);
+                router.push({
+                    pathname: '/results',
+                    params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
+                })
+            })
         }
 
     };

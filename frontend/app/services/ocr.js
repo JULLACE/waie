@@ -14,8 +14,8 @@ const sendImage = (image) => {
     let data = new FormData()
     data.append('image', {
         uri: `${image.uri}`,
-        type: `${image.mimeType}`,
-        name: `${image.fileName}`
+        type: `${image.mimeType ? image.mimeType : 'image/jpeg'}`,
+        name: `${image.fileName ? image.fileName : 'test'}`
     })
 
     const request = axios.post(`${baseUrl}/upload`, data, {
