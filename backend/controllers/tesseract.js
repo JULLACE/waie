@@ -25,6 +25,8 @@ tesRouter.post('/upload', async (request, response) => {
     cachePath: './lang',
   });
 
+  worker.setParameters({tessedit_pageseg_mode: 3})
+
   const gotImage = request.files.image
 
   const { data: { text } } = await worker.recognize(gotImage.data);
