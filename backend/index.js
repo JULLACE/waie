@@ -14,9 +14,7 @@ app.use(express.json())
 app.use(fileupload())
 app.use(cors()) // May wanna set this just to our deployment's ip...
 
-app.get('/', (request, response) => {
-    response.send('<h1> hi </h1>')
-})
+app.use(express.static('dist'))
 
 app.use('/api/tes', tesRouter)
 app.use(middleware.unknownEndPoint)
