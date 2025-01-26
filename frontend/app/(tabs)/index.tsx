@@ -6,8 +6,6 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 
-const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
-
 export default function HomeScreen() {
     const router = useRouter();
     useFonts({
@@ -15,7 +13,7 @@ export default function HomeScreen() {
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
     });
     return (
-        <AnimatedLinearGradient
+        <LinearGradient
             colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
@@ -32,8 +30,14 @@ export default function HomeScreen() {
                     label="Upload Photo" 
                     onPress={() => router.push('/photoselect')} 
                     icon={<Feather name="upload" size={24} />} />
+                <Button 
+                    label="Results" 
+                    onPress={() => router.push({
+                        pathname: '/results',
+                        params: { ingredientsList: JSON.stringify(['apple', 'peanut butter', 'ice cream', 'cookielsdjkfl']) }
+                    })} />
             </View>
-        </AnimatedLinearGradient>
+        </LinearGradient>
     );
 }
 
