@@ -6,10 +6,11 @@ import Feather from '@expo/vector-icons/Feather';
 type Props = {
     label: string;
     isVisible: boolean;
+    content: string;
     onPress: () => void;
 };
 
-export default function Dropdown({ label, isVisible, onPress }: Props) {
+export default function Dropdown({ label, isVisible, content, onPress }: Props) {
     useFonts({
         'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
     });
@@ -30,7 +31,11 @@ export default function Dropdown({ label, isVisible, onPress }: Props) {
                 <Text style={styles.buttonLabel}>{label}</Text>
                 <Feather name={isVisible ? "chevron-up" : "chevron-down"} size={24} color="white" />
             </Pressable>
-            <View style={isVisible && styles.dropdownContainer}></View>
+            {isVisible && 
+                <View style={styles.dropdownContainer}>
+                    <Text style={styles.text}>{content}</Text>
+                </View>
+            }
             </LinearGradient>
         </View>
     );
@@ -62,6 +67,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     dropdownContainer: {
-        
+        borderRadius: 15,
+        borderColor: '#fff',
+        padding: 10,
+        marginHorizontal: 5,
+        marginBottom: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: 100,
+        fontFamily: 'Asap-Regular',
+        backgroundColor: '#000',
+    },
+    text: {
+        fontSize: 16,
+        fontFamily: 'Asap-Regular',
+        color: '#fff',
     }
 });

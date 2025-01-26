@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Animated } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
@@ -29,51 +29,51 @@ export default function ResultsScreen() {
     }
 
     return (
-        // <LinearGradient
-        //     colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
-        //     start={{ x: 0, y: 0 }}
-        //     end={{ x: 1, y: 1 }} 
-        //     style={styles.gradient}
-        // ></LinearGradient>
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <LinearGradient
-                    colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }} 
-                    style={styles.headerContainer}
-                >
-                    <Text style={styles.header}>Results</Text>
-                    <Text style={styles.title}>What Are You Eating?</Text>
-                </LinearGradient>
-            </View>
-            <Text style={styles.ingredients}>Ingredients ({ingredientsArray.length})</Text>
-            <View style={styles.buttonRow}>
-                {ingredientsArray.map((key: string) => (
-                    <Ingredient 
-                    key={key}
-                    id={key}
-                    label={key}
-                    isPressed={selectedButton === key}
-                    onPress={handleIngredientPress} />
-                ))}
-            </View>
-            <View style={styles.ingredientInfo}>
+        <ScrollView
+        bounces={false}>
+            <View style={styles.container}>
+                <View style={styles.headerContainer}>
+                    <LinearGradient
+                        colors={["rgb(92, 114, 133)", "rgb(129, 140, 120)"]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }} 
+                        style={styles.headerContainer}
+                    >
+                        <Text style={styles.header}>Results</Text>
+                        <Text style={styles.title}>What Are You Eating?</Text>
+                    </LinearGradient>
+                </View>
+                <Text style={styles.ingredients}>Ingredients ({ingredientsArray.length})</Text>
+                <View style={styles.buttonRow}>
+                    {ingredientsArray.map((key: string) => (
+                        <Ingredient 
+                        key={key}
+                        id={key}
+                        label={key}
+                        isPressed={selectedButton === key}
+                        onPress={handleIngredientPress} />
+                    ))}
+                </View>
+                <View style={styles.ingredientInfo}>
+                    {/* Implement backend stuff */}
+                    <Text style={styles.text}>Click on an ingredient to learn more!</Text>
+                </View>
                 {/* Implement backend stuff */}
-                <Text style={styles.text}>Click on an ingredient to learn more!</Text>
+                <Dropdown
+                    label="Allergens & Dietary Restrictions (NUMBER)   "
+                    isVisible={visible}
+                    content="asdkjflskdfjlskfjslkfjlsdkfjf"
+                    onPress={handleDropdownPress}>
+                </Dropdown>
             </View>
-            <Dropdown
-                label="Allergens & Dietary Restrictions (NUMBER)   "
-                isVisible={visible}
-                onPress={handleDropdownPress}>
-            </Dropdown>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        height: 1500,
         backgroundColor: 'black',
         justifyContent: 'flex-start',
     },
