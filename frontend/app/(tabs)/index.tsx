@@ -30,7 +30,7 @@ export default function HomeScreen() {
                     icon={<Ionicons name={'camera'} size={24} />} />
                 <Button 
                     label="Upload Photo" 
-                    onPress={() => router.push('/camera')} 
+                    onPress={() => router.push('/photoselect')} 
                     icon={<Feather name="upload" size={24} />} />
             </View>
         </AnimatedLinearGradient>
