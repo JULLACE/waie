@@ -21,24 +21,24 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.gradient}
         >
-            <View style={styles.container}>
-                <Text style={styles.title}>WAYE</Text>
-                <Text style={styles.text}>What Are You Eating?</Text>
-                <Button
-                    label="Take Photo"
-                    onPress={() => router.push('/camera')}
-                    icon={<Ionicons name={'camera'} size={24} />} />
-<<<<<<< HEAD
-                <Button 
-                    label="Upload Photo" 
-                    onPress={() => router.push('/photoselect')} 
-=======
-                <Button
-                    label="Upload Photo"
-                    onPress={() => router.push('/camera')}
->>>>>>> main
-                    icon={<Feather name="upload" size={24} />} />
+            <View style={styles.topLogo}>
+                <Text style={styles.smallLogo}>WAYE</Text>
+                <Text style={styles.smallButton}>Sign In</Text>
             </View>
+
+            <View style={styles.container}>
+                    <Text style={styles.title}>WAYE</Text>
+                    <Text style={styles.text}>What Are You Eating?</Text>
+                    <Button
+                        label="Take Photo"
+                        onPress={() => router.push('/camera')}
+                        icon={<Ionicons name={'camera'} size={24} />} />
+                    <Button 
+                        label="Upload Photo" 
+                        onPress={() => router.push('/photoselect')} 
+                        icon={<Feather name="upload" size={24} />} />
+            </View>
+
         </AnimatedLinearGradient>
     );
 }
@@ -46,23 +46,43 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     gradient: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     container: {
         justifyContent: 'center',
         alignItems: 'center',
     },
+    topLogo: {
+        position: 'fixed',
+        top: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 20,
+        paddingTop: 20,
+        paddingRight: 20,
+        width: '100%',
+    },
+    smallLogo: {
+        fontSize: 32,
+        fontFamily: 'Asap-Thin',
+        color: '#fff',
+    },
+    smallButton: {
+        fontSize: 24,
+        fontFamily: 'Asap-Regular',
+        color: '#fff',
+    },
     title: {
-        fontSize: 64,
+        fontSize: 96,
         fontFamily: 'Asap-Thin',
         color: '#fff',
         margin: 8,
     },
     text: {
-        fontSize: 24,
-        fontFamily: 'Asap-Regular',
-        color: 'rgb(50, 54, 53)',
+        fontSize: 36,
+        fontFamily: 'Asap-Thin',
+        color: '#fff',
         marginBottom: 80,
     }
 });
