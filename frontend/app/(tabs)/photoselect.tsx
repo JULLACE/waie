@@ -13,17 +13,17 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Ingredient from '../components/Ingredient';
 
 const languages = [
-  { name: 'Chinese', code: 'CN' },
-  { name: 'Arabic', code: 'AR' },
-  { name: 'English', code: 'EN' },
-  { name: 'Thai', code: 'TH' },
-  { name: 'Japanese', code: 'JP' },
-  { name: 'Spanish', code: 'ES' },
-  { name: 'Hindi', code: 'HI' },
-  { name: 'Bengali', code: 'BN' },
-  { name: 'Russian', code: 'RU' },
-  { name: 'Portuguese', code: 'PT' },
-  { name: 'French', code: 'FR' },
+  { name: 'Chinese', code: 'CN', key: 'chi_sim' },
+  { name: 'Arabic', code: 'AR',  key: 'ara' },
+  { name: 'English', code: 'EN', key: 'eng' },
+  { name: 'Thai', code: 'TH', key: 'tha' },
+  { name: 'Japanese', code: 'JP', key: 'jpn' },
+  { name: 'Spanish', code: 'ES', key: 'spa' },
+  { name: 'Hindi', code: 'HI', key: 'hin' },
+  { name: 'Bengali', code: 'BN', key: 'ben' },
+  { name: 'Russian', code: 'RU', key: 'rus' },
+  { name: 'Portuguese', code: 'PT', key: 'por' },
+  { name: 'French', code: 'FR', key: 'fra' },
 ];
         
 import Loading from "../components/Loading"
@@ -31,6 +31,8 @@ import Loading from "../components/Loading"
 export default function ImagePickerExample() {
   const [modalVisible, setModalVisible] = useState(false);
   const [image, setImage] = useState<string | null>(null);
+  const [selectedLang, setSelectedLang] = useState('eng')
+
   const router = useRouter();
 
   useFonts({
@@ -52,7 +54,7 @@ export default function ImagePickerExample() {
     if (!result.canceled) {
       setLoading(true) // for the loading screen
       setImage(result.assets[0].uri);
-      ocrService.sendImage(result.assets[0]).then(res => {
+      ocrService.sendImage(result.assets[0], selectedLang).then(res => {
         console.log(res);
         router.push({
           pathname: '/results',
@@ -64,8 +66,9 @@ export default function ImagePickerExample() {
   };
 
   const [selectedButton, setSelectedButton] = useState<string | null>('EN');
-  const handleIngredientPress = (id: string) => {
+  const handleIngredientPress = (id: string, tkey) => {
     setSelectedButton(id);
+    setSelectedLang(tkey)
     setModalVisible(!modalVisible);
   };
 
@@ -83,9 +86,10 @@ export default function ImagePickerExample() {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Choose a language</Text>
               <View style={styles.buttonRow}>
-                {languages.map(({name, code}) => (
+                {languages.map(({name, code, key}) => (
                     <Ingredient 
                     key={code}
+                    tkey={key}
                     id={code}
                     label={name}
                     isPressed={selectedButton === code}

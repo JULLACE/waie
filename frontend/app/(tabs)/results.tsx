@@ -26,7 +26,7 @@ export default function ResultsScreen() {
         'Asap-SemiBold': require('../../assets/fonts/Asap-SemiBold.ttf'),
     });
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
-    const handleIngredientPress = (id: string) => {
+    const handleIngredientPress = (id: string, tkey) => {
         setSelectedButton(id);
         ocrService.sendOneIngredient(id).then(res => {
             setExplanationMessage(res.explanation)
@@ -71,9 +71,9 @@ export default function ResultsScreen() {
                     <Text style={styles.text}>{explanationMessage}</Text>
                 </View>
                 <Dropdown
-                    label={`Allergens & Dietary Restrictions (${dietaryArray ? dietaryArray.length : 0})`}
+                    label={`Allergens & Dietary Restrictions (${ingredientsArray.length != 0 ? dietaryArray.length : 0})`}
                     isVisible={visible}
-                    content={dietaryArray ? dietaryArray.join(', ') : 'grdhufdxfshcxjjndscx'}
+                    content={dietaryArray && (ingredientsArray.length !== 0) ? dietaryArray.join(', ') : 'All clean!'}
                     onPress={handleDropdownPress}>
                 </Dropdown>
             </View>
