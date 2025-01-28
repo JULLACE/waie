@@ -1,3 +1,8 @@
+
+[<img src="https://github.com/user-attachments/assets/c90cd6c2-3fcb-40f7-9de1-97b04b13cd95">](https://devpost.com/software/waye-what-are-you-eating)
+
+> Winner of "Best Use of Gen AI" Category in Swamphacks X (click above)
+
 # what
 **Do you seriously know what Glucuronolactone is? (I did not make this ingredient up)**
 
@@ -31,7 +36,5 @@ node run dev
 ```
 
 (Note: be aware our project requires certain secrets using .env files) 
-
-
 
 
