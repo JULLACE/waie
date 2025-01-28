@@ -14,17 +14,17 @@ import Ingredient from '../components/Ingredient';
 import { useFonts } from 'expo-font';
 
 const languages = [
-    { name: 'Chinese', code: 'CN' },
-    { name: 'Arabic', code: 'AR' },
-    { name: 'English', code: 'EN' },
-    { name: 'Thai', code: 'TH' },
-    { name: 'Japanese', code: 'JP' },
-    { name: 'Spanish', code: 'ES' },
-    { name: 'Hindi', code: 'HI' },
-    { name: 'Bengali', code: 'BN' },
-    { name: 'Russian', code: 'RU' },
-    { name: 'Portuguese', code: 'PT' },
-    { name: 'French', code: 'FR' },
+    { name: 'Chinese', code: 'CN', key: 'chi_sim' },
+    { name: 'Arabic', code: 'AR',  key: 'ara' },
+    { name: 'English', code: 'EN', key: 'eng' },
+    { name: 'Thai', code: 'TH', key: 'tha' },
+    { name: 'Japanese', code: 'JP', key: 'jpn' },
+    { name: 'Spanish', code: 'ES', key: 'spa' },
+    { name: 'Hindi', code: 'HI', key: 'hin' },
+    { name: 'Bengali', code: 'BN', key: 'ben' },
+    { name: 'Russian', code: 'RU', key: 'rus' },
+    { name: 'Portuguese', code: 'PT', key: 'por' },
+    { name: 'French', code: 'FR', key: 'fra' },
   ];
 
 export default function App() {
@@ -35,7 +35,8 @@ export default function App() {
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedButton, setSelectedButton] = useState<string | null>('EN');
-    
+    const [selectedLang, setSelectedLang] = useState('eng')
+
     const [fontsLoaded] = useFonts({
     'Asap-Thin': require('../../assets/fonts/Asap-Thin.ttf'),
     'Asap-Regular': require('../../assets/fonts/Asap-Regular.ttf'),
@@ -59,10 +60,8 @@ export default function App() {
     const takePhoto = async () => {
         if (cameraRef.current) {
             const photo = await cameraRef.current.takePictureAsync();
-            console.log(photo)
             setLoading(true) // for the loading screen
-            ocrService.sendImage(photo).then(res => {
-                console.log(res); 
+            ocrService.sendImage(photo, selectedLang).then(res => {
                 router.push({
                     pathname: '/results',
                     params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
@@ -76,9 +75,10 @@ export default function App() {
         setFacing(current => (current == 'back' ? 'front' : 'back'));
     };
     
-    const handleIngredientPress = (id: string) => {
+    const handleIngredientPress = (id: string, tkey) => {
         setSelectedButton(id);
         setModalVisible(!modalVisible);
+        setSelectedLang(tkey)
       };
 
     return (

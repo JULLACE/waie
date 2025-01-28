@@ -55,7 +55,6 @@ export default function ImagePickerExample() {
       setLoading(true) // for the loading screen
       setImage(result.assets[0].uri);
       ocrService.sendImage(result.assets[0], selectedLang).then(res => {
-        console.log(res);
         router.push({
           pathname: '/results',
           params: { ingredientsList: JSON.stringify(res.ingredients), dietary: JSON.stringify(res.dietary)}
