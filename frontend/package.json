@@ -9,7 +9,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build:ui": "rm -rf dist && npx expo export -p web && cp -r dist ../backend"
   },
   "jest": {
     "preset": "jest-expo"

@@ -40,7 +40,8 @@ export default function ResultsScreen() {
 
     return (
         <ScrollView
-        bounces={false}>
+        bounces={false}
+        style={styles.scrollContainer}>
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <LinearGradient
@@ -82,6 +83,9 @@ export default function ResultsScreen() {
 }
 
 const styles = StyleSheet.create({
+    scrollContainer: {
+        backgroundColor: 'black',
+    },
     container: {
         flex: 1,
         height: 2000,
@@ -93,7 +97,9 @@ const styles = StyleSheet.create({
         top: 0,
         position: 'absolute',
         borderColor: 'black',
-        borderRadius: 25,
+        borderBottomLeftRadius: 25,
+        borderBottomRightRadius: 25,
+
         borderWidth: 0,
         justifyContent: 'center',
         alignItems: 'center',

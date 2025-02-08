@@ -19,10 +19,8 @@ export default function HomeScreen() {
             end={{ x: 1, y: 1 }}
             style={styles.gradient}
         >
-            
 
             <View style={styles.container}>
-              
                 <Text style={styles.title}>WAYE</Text>
                 <Text style={styles.text}>What Are You Eating?</Text>
                 <Button
@@ -33,12 +31,6 @@ export default function HomeScreen() {
                     label="Upload Photo" 
                     onPress={() => router.push('/photoselect')} 
                     icon={<Feather name="upload" size={24} />} />
-                {/* <Button 
-                    label="Results" 
-                    onPress={() => router.push({
-                        pathname: '/results',
-                        params: { ingredientsList: JSON.stringify(['apple', 'peanut butter', 'ice cream', 'cookielsdjkfl', 'sdfssfsdf', 'sdfsdffds', 'sdfsdfsdf' ]) }
-                    })} /> */}
             </View>
 
         </LinearGradient>
@@ -82,7 +74,7 @@ const styles = StyleSheet.create({
         margin: 8,
     },
     text: {
-        fontSize: 36,
+        fontSize: 32,
         fontFamily: 'Asap-Thin',
         color: '#fff',
         marginBottom: 80,

@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingTop: 40,
-        borderRadius: 25,
+        borderBottomLeftRadius: 25,
+        borderBottomRightRadius: 25,
       },
       backButton: {
         margin: 5,

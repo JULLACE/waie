@@ -1,5 +1,5 @@
 import { Image, type ImageSource } from "expo-image";
-import { Text, View, StyleSheet, Animated, Dimensions, Modal} from 'react-native';
+import { Text, View, StyleSheet, Animated, Dimensions, Modal, ActivityIndicator} from 'react-native';
 
 type Props = {
     modalVisible?: true;
@@ -11,7 +11,8 @@ export default function ImageViewer({ modalVisible }: Props) {
         <Modal animationType="fade" transparent={modalVisible} presentationStyle="overFullScreen">
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                <Text style={styles.loadingText}>Processing...</Text>
+                    <ActivityIndicator size="large" color="#000" />
+                    <Text style={styles.loadingText}>Processing...</Text>
                 </View>
             </View>
         </Modal>
